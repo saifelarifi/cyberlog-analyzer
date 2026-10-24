@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "newbiesaif"
+version = "0.1.0"
+description = "A lightweight Linux security log analyzer"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["rich>=13.7"]
+license = "MIT"
+authors = [
+    { name = "Saif" }
+]
+keywords = ["cybersecurity", "linux", "security", "log-analyzer"]
+
+[project.scripts]
+newbiesaif = "newbiesaif.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

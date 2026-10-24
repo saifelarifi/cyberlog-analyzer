@@ -1,0 +1,2 @@
+[console_scripts]
+newbiesaif = newbiesaif.cli:main
