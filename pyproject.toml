@@ -15,8 +15,14 @@ authors = [
 ]
 keywords = ["cybersecurity", "linux", "security", "log-analyzer"]
 
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11"]
+
 [project.scripts]
 newbiesaif = "newbiesaif.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+newbiesaif = ["sample.log"]
