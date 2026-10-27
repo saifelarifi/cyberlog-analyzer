@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/saifelarifi/cyberlog-analyzer/blob/main/docs/report.schema.json",
+  "title": "CyberLog Analyzer report",
+  "description": "Version 1.1 report; legacy source, log_format, threshold, summary, and results fields are retained.",
+  "type": "object",
+  "required": ["source", "log_format", "threshold", "summary", "results"],
+  "properties": {
+    "schema_version": {"const": "1.1.0"},
+    "source": {"type": "string"},
+    "sources": {"type": "array", "items": {"type": "string"}},
+    "log_format": {"enum": ["auto", "auth", "journald"]},
+    "threshold": {"type": "integer", "minimum": 1},
+    "since": {"type": ["string", "null"], "format": "date-time"},
+    "until": {"type": ["string", "null"], "format": "date-time"},
+    "window_seconds": {"type": ["integer", "null"], "minimum": 1},
+    "syslog_year": {"type": "integer", "minimum": 1, "maximum": 9999},
+    "summary": {
+      "type": "object",
+      "required": ["failed_attempts", "unique_ips", "alerts"],
+      "properties": {
+        "failed_attempts": {"type": "integer", "minimum": 0},
+        "unique_ips": {"type": "integer", "minimum": 0},
+        "alerts": {"type": "integer", "minimum": 0},
+        "unique_usernames": {"type": "integer", "minimum": 0},
+        "malformed_lines": {"type": "integer", "minimum": 0},
+        "events_without_timestamp": {"type": "integer", "minimum": 0},
+        "filtered_events": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "username_summary": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/userCount"}
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ip_address", "failed_attempts", "alert"],
+        "properties": {
+          "ip_address": {"type": "string"},
+          "failed_attempts": {"type": "integer", "minimum": 1},
+          "alert": {"type": "boolean"},
+          "spike_alert": {"type": "boolean"},
+          "usernames": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/userCount"}
+          },
+          "first_seen": {"type": ["string", "null"], "format": "date-time"},
+          "last_seen": {"type": ["string", "null"], "format": "date-time"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "$defs": {
+    "userCount": {
+      "type": "object",
+      "required": ["username", "failed_attempts"],
+      "properties": {
+        "username": {"type": "string", "minLength": 1, "maxLength": 128},
+        "failed_attempts": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}
