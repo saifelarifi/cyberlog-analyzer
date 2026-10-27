@@ -7,11 +7,11 @@ import ipaddress
 import json
 import re
 from collections import Counter
-from collections.abc import Iterable, TextIO
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Literal
+from typing import Literal, TextIO
 
 LogFormat = Literal["auto", "auth", "journald"]
 MAX_LOG_LINE_LENGTH = 64 * 1024
